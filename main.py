@@ -17,4 +17,7 @@ if __name__ == "__main__":
     btn3.pack()
     
     root.mainloop()
-    
+
+
+for i in "12312312":
+    pass

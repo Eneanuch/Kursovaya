@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отображение параметров</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .logs {
+            width: 20%;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+        .logs h2 {
+            text-align: center;
+            color: #333;
+        }
+        .logs pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .content {
+            width: 60%;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: #fff;
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-container {
+            width: 20%;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+        }
+        .form-container h2 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .hidden {
+            display: none;
+        }
+        select {
+    width: 100%;
+    padding: 8px;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"><path d="M2 5l6 6 6-6H2z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+}
+
+select:focus {
+    border-color: #66afe9;
+    outline: none;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logs">
+            <h2>Логи</h2>
+            <pre id="logOutput">Логи будут отображаться здесь...</pre>
+        </div>
+        <div class="content">
+            <h1>Отображение параметров</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Параметр</th>
+                        <th>Значение</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Влажность</td>
+                        <td id="humidity">Loading...</td>
+                    </tr>
+                    <tr>
+                        <td>Температура</td>
+                        <td id="temperature">Loading...</td>
+                    </tr>
+                    <tr>
+                        <td>Сила тока</td>
+                        <td id="amperage">Loading...</td>
+                    </tr>
+                    <tr>
+                        <td>Заряд батареи</td>
+                        <td id="battery">Loading...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-container">
+            <h2>Форма отправки</h2>
+            <form id="sendForm">
+                <div class="form-group">
+                    <label for="sendMethod">Способ отправки</label>
+                    <select id="sendMethod" name="sendMethod">
+                        <option value="sms">SMS</option>
+                        <option value="i2c">I2C</option>
+                        <option value="uart">UART</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sendDataType">Данные для отправки</label>
+                    <select id="sendDataType" name="sendDataType">
+                        <option value="board">Данные с платы</option>
+                        <option value="other">Другое</option>
+                    </select>
+                    <input type="text" id="otherData" name="otherData" class="hidden" placeholder="Введите данные">
+                </div>
+                <div id="smsFields" class="form-group">
+                    <label for="phoneNumber">Номер телефона</label>
+                    <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Введите номер телефона">
+                </div>
+                <div id="i2cFields" class="hidden">
+                    <div class="form-group">
+                        <label for="i2cAddress">I2C Адрес</label>
+                        <input type="text" id="i2cAddress" name="i2cAddress" placeholder="Введите I2C адрес">
+                    </div>
+                    <div class="form-group">
+                        <label for="i2cBus">Шина</label>
+                        <input type="number" id="i2cBus" name="i2cBus" placeholder="Введите номер шины">
+                    </div>
+                </div>
+                <div id="uartFields" class="hidden">
+                    <div class="form-group">
+                        <label for="uartPort">Название порта</label>
+                        <input type="text" id="uartPort" name="uartPort" placeholder="Введите название порта">
+                    </div>
+                    <div class="form-group">
+                        <label for="baudRate">Скорость (бод)</label>
+                        <input type="number" id="baudRate" name="baudRate" placeholder="Введите скорость бод">
+                    </div>
+                    <div class="form-group">
+                        <label for="timeout">Таймаут</label>
+                        <input type="number" id="timeout" name="timeout" placeholder="Введите таймаут">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Отправить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('/get_results');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                updateTable(data);
+            } catch (error) {
+                console.error('Failed to fetch data:', error);
+                document.getElementById('humidity').textContent = 'Error';
+                document.getElementById('temperature').textContent = 'Error';
+                document.getElementById('amperage').textContent = 'Error';
+                document.getElementById('battery').textContent = 'Error';
+            }
+        }
+
+        function updateTable(data) {
+            document.getElementById('humidity').textContent = data.humidity;
+            document.getElementById('temperature').textContent = data.temperature;
+            document.getElementById('amperage').textContent = data.amperage;
+            document.getElementById('battery').textContent = data.battery;
+            logMessage(`Data updated: ${JSON.stringify(data)}`);
+        }
+
+        function logMessage(message) {
+            const logOutput = document.getElementById('logOutput');
+            logOutput.textContent += `\n${message}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchData);
+
+        document.getElementById('sendDataType').addEventListener('change', function () {
+            const otherDataField = document.getElementById('otherData');
+            if (this.value === 'other') {
+                otherDataField.classList.remove('hidden');
+            } else {
+                otherDataField.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('sendMethod').addEventListener('change', function () {
+            const smsFields = document.getElementById('smsFields');
+            const i2cFields = document.getElementById('i2cFields');
+            const uartFields = document.getElementById('uartFields');
+
+            smsFields.classList.add('hidden');
+            i2cFields.classList.add('hidden');
+            uartFields.classList.add('hidden');
+
+            if (this.value === 'sms') {
+                smsFields.classList.remove('hidden');
+            } else if (this.value === 'i2c') {
+                i2cFields.classList.remove('hidden');
+            } else if (this.value === 'uart') {
+                uartFields.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('sendForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const method = document.getElementById('sendMethod').value;
+            const dataType = document.getElementById('sendDataType').value;
+            let data;
+
+            if (dataType === 'board') {
+                data = {
+                    humidity: document.getElementById('humidity').textContent,
+                    temperature: document.getElementById('temperature').textContent,
+                    amperage: document.getElementById('amperage').textContent,
+                    battery: document.getElementById('battery').textContent
+                };
+            } else {
+                data = document.getElementById('otherData').value;
+            }
+
+            if (method === 'sms') {
+                const phoneNumber = document.getElementById('phoneNumber').value;
+                logMessage(`Sending SMS to ${phoneNumber} with data: ${JSON.stringify(data)}`);
+                // Реализуйте отправку SMS
+            } else if (method === 'i2c') {
+                const i2cAddress = document.getElementById('i2cAddress').value;
+                const i2cBus = document.getElementById('i2cBus').value;
+                logMessage(`Sending data via I2C to address ${i2cAddress} on bus ${i2cBus} with data: ${JSON.stringify(data)}`);
+                // Реализуйте отправку данных по I2C
+            } else if (method === 'uart') {
+                const uartPort = document.getElementById('uartPort').value;
+                const baudRate = document.getElementById('baudRate').value;
+                const timeout = document.getElementById('timeout').value;
+                logMessage(`Sending data via UART on port ${uartPort} with baud rate ${baudRate} and timeout ${timeout} with data: ${JSON.stringify(data)}`);
+                // Реализуйте отправку данных по UART
+            }
+        });
+    </script>
+</body>
+</html>
