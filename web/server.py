@@ -10,13 +10,10 @@ root = os.path.dirname(os.path.abspath(__file__))
 
 # run with uvicorn web:app --host 0.0.0.0 --port 80
 
-senders_classes = [
-
-]
 
 @app.get('/')
 async def results():
-    return FileResponse('index.html')
+    return FileResponse(root + '/index.html')
 
 
 @app.get('/get_results')
