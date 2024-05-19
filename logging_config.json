@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "standard": {
+      "()": "uvicorn.logging.DefaultFormatter",
+      "format": "%(levelprefix)s %(asctime)s - %(message)s",
+      "use_colors": true
+    },
+    "uvicorn": {
+      "()": "uvicorn.logging.DefaultFormatter",
+      "format": "%(levelprefix)s %(asctime)s - %(message)s",
+      "use_colors": true
+    }
+  },
+  "handlers": {
+    "default": {
+      "level": "INFO",
+      "formatter": "standard",
+      "class": "logging.StreamHandler"
+    },
+    "uvicorn": {
+      "level": "INFO",
+      "formatter": "uvicorn",
+      "class": "logging.StreamHandler"
+    }
+  },
+  "loggers": {
+    "": {
+      "handlers": ["default"],
+      "level": "INFO",
+      "propagate": true
+    },
+    "uvicorn": {
+      "handlers": ["uvicorn"],
+      "level": "INFO",
+      "propagate": false
+    },
+    "uvicorn.error": {
+      "level": "INFO"
+    },
+    "uvicorn.access": {
+      "handlers": ["uvicorn"],
+      "level": "INFO",
+      "propagate": false
+    }
+  }
+}
