@@ -2,19 +2,21 @@ import time
 
 import serial
 
+from models import SMSData, SenderData, Statuses
 from senders.sender_head import SenderHead
 
 
 class SmsSender(SenderHead):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, port='/dev/ttsyS0', baudrate=9600, timeout=1, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.serial = serial.Serial(
-            port=kwargs.get('port', '/dev/ttyS0'),
-            baudrate=kwargs.get('baudrate', 9600),
-            timeout=kwargs.get('timeout', 1)
+            port=port,
+            baudrate=baudrate,
+            timeout=timeout
         )
-        self.setup_gsm()
+        if not self.setup_gsm():
+            raise Exception("GSM не получается подключить")
 
     def send_at_command(self, command, expected_response, timeout=2):
         self.serial.write((command + '\r').encode())
@@ -35,11 +37,11 @@ class SmsSender(SenderHead):
             return False
         return True
 
-    def send_data(self, *args, **data) -> bool:
-        if self.send_at_command(f'AT+CMGS="{data["phonenumber"]}"', '>') is not None:
-            self.serial.write((data["message"] + '\x1A').encode())
+    def send_data(self, data: SMSData) -> SenderData:
+        if self.send_at_command(f'AT+CMGS="{data.phoneNumber}"', '>') is not None:
+            self.serial.write((data.data + '\x1A').encode())
             if self.send_at_command('', 'OK', timeout=10) is not None:
-                return True
+                return SenderData(status=Statuses.SUCCESS, message='OK')
             else:
-                return False
-        return False
+                return SenderData(status=Statuses.FAILURE, message='GSM не отвечает после отправки сообщения')
+        return SenderData(status=Statuses.FAILURE, message='GSM не отвечает при попытке отправить сообщение')
