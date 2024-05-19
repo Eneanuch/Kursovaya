@@ -279,18 +279,15 @@ select:focus {
             if (method === 'sms') {
                 const phoneNumber = document.getElementById('phoneNumber').value;
                 logMessage(`Sending SMS to ${phoneNumber} with data: ${JSON.stringify(data)}`);
-                // Реализуйте отправку SMS
             } else if (method === 'i2c') {
                 const i2cAddress = document.getElementById('i2cAddress').value;
                 const i2cBus = document.getElementById('i2cBus').value;
                 logMessage(`Sending data via I2C to address ${i2cAddress} on bus ${i2cBus} with data: ${JSON.stringify(data)}`);
-                // Реализуйте отправку данных по I2C
             } else if (method === 'uart') {
                 const uartPort = document.getElementById('uartPort').value;
                 const baudRate = document.getElementById('baudRate').value;
                 const timeout = document.getElementById('timeout').value;
                 logMessage(`Sending data via UART on port ${uartPort} with baud rate ${baudRate} and timeout ${timeout} with data: ${JSON.stringify(data)}`);
-                // Реализуйте отправку данных по UART
             }
         });
     </script>
