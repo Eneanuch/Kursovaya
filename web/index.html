@@ -153,6 +153,10 @@
                         <td id="temperature">Loading...</td>
                     </tr>
                     <tr>
+                        <td>Напряжение</td>
+                        <td id="voltage">Loading...</td>
+                    </tr>
+                    <tr>
                         <td>Сила тока</td>
                         <td id="amperage">Loading...</td>
                     </tr>
@@ -160,6 +164,7 @@
                         <td>Заряд батареи</td>
                         <td id="battery">Loading...</td>
                     </tr>
+
                 </tbody>
             </table>
         </div>
@@ -231,6 +236,7 @@
                     $('#temperature').text('Ошибка');
                     $('#amperage').text('Ошибка');
                     $('#battery').text('Ошибка');
+                    $('#voltage').text('Ошибка');
                 }
             });
         }
@@ -240,6 +246,7 @@
             $('#temperature').text(data.temperature);
             $('#amperage').text(data.amperage);
             $('#battery').text(data.battery);
+            $('#voltage').text(data.voltage);
             logMessage(`Данные обновлены: ${JSON.stringify(data)}`);
         }
 
@@ -284,7 +291,8 @@
                         humidity: $('#humidity').text(),
                         temperature: $('#temperature').text(),
                         amperage: $('#amperage').text(),
-                        battery: $('#battery').text()
+                        battery: $('#battery').text(),
+                        voltage: $('#voltage').text()
                     };
                 } else {
                     data = $('#otherData').val();
