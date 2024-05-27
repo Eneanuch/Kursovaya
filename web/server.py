@@ -12,7 +12,7 @@ from senders.sender_head import SenderHead
 from senders.sms_sender import SmsSender
 from senders.uart_sender import UARTSender
 from sensors.ACS712 import ACS712
-from sensors.AM2320 import AM2320
+from sensors.DHT22 import DHT22
 from sensors.ZMPT101B import ZMPT101B
 from sensors.sensor_head import SensorHead
 
@@ -33,7 +33,7 @@ senders_dict: dict[str, SenderHead] = {
 
 sensors_list: list[SensorHead] = [
     ACS712(),
-    AM2320(),
+    DHT22(),
     ZMPT101B(),
 ]
 
