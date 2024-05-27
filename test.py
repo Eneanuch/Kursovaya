@@ -1,3 +1,5 @@
+import time
+
 from sensors.DHT22 import DHT22
 from sensors.sensor_head import SensorHead
 
@@ -8,4 +10,4 @@ sensors_list: list[SensorHead] = [
 while True:
     for i in sensors_list:
         print(i.get_data())
-
+    time.sleep(2)
