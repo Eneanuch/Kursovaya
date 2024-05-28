@@ -20,6 +20,6 @@ class DHT22(SensorHead):
         humidity = round(sum(map(lambda x: x[0], data)) / len(self.devices), 2)
 
         return {
-            'temperature': f"{temperature}*C",
+            'temperature': f"{temperature}C",
             'humidity': f"{humidity}%"
         }

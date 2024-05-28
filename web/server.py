@@ -8,14 +8,9 @@ from fastapi import FastAPI, HTTPException
 from starlette.responses import FileResponse, JSONResponse
 
 from models import SendPayload, SMSData, I2CData, UARTData, SenderData
-from senders.i2c_sender import I2CSender
-from senders.sender_head import SenderHead
-from senders.sms_sender import SmsSender
-from senders.uart_sender import UARTSender
-from sensors.ACS712 import ACS712
-from sensors.DHT22 import DHT22
-from sensors.ZMPT101B import ZMPT101B
-from sensors.sensor_head import SensorHead
+from senders import SenderHead, SmsSender, UARTSender, I2CSender
+from sensors import ACS712, DHT22, ZMPT101B, SensorHead
+
 
 app = FastAPI()
 root = os.path.dirname(os.path.abspath(__file__))
