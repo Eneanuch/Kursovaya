@@ -10,7 +10,7 @@ from sensors.sensor_head import SensorHead
 
 class DHT22(SensorHead):
 
-    def __init__(self, dht_pin1=board.D16, dht_pin2=board.D18):
+    def __init__(self, dht_pin1=board.D23, dht_pin2=board.D24):
         super().__init__()
         self.system_name = 'dht'
         self.devices = [adafruit_dht.DHT22(dht_pin1), adafruit_dht.DHT22(dht_pin2)]
