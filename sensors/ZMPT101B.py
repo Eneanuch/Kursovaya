@@ -31,6 +31,6 @@ class ZMPT101B(SensorHead):
         voltage = round(self.chan.voltage, 2)
 
         return {
-            "battery": f"{self.get_battery_level(voltage)}",
+            "battery": f"{self.get_battery_level(voltage)}%",
             "voltage": f"{voltage}V"
         }
