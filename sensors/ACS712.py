@@ -17,7 +17,7 @@ class ACS712(SensorHead):
 
     def get_data(self, *args, **kwargs) -> dict[str: str]:
         voltage = self.chan.voltage
-        current = (voltage - 2.5) / 0.185  # config for 5A
+        current = round((voltage - 2.5) / 0.185, 2) # config for 5A
         return {
             "current": f"{current}A"
         }

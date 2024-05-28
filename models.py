@@ -27,7 +27,7 @@ class SMSData(BaseModel):
 
 
 class I2CData(BaseModel):
-    i2cAddress: str
+    i2cAddress: int
     i2cBus: int
     data: str
 

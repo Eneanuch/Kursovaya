@@ -49,14 +49,19 @@ async def results():
 async def get_results():
     # example data
     data = {
-        'humidity': '45%',
-        'temperature': '22°C',
-        'current': '3.5A',
-        'voltage': '5V',
-        'battery': '75%'
+        'humidity': 'Error',
+        'temperature': 'Error',
+        'current': 'Error',
+        'voltage': 'Error',
+        'battery': 'Error'
     }
     for sensor in sensors_list:
-        data.update(sensor.get_data())
+        for i in range(10):
+            try:
+                data.update(sensor.get_data())
+                break
+            except Exception as e:
+                logger.info(e)
 
     return JSONResponse(data)
 
