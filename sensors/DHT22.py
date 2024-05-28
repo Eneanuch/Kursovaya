@@ -1,3 +1,6 @@
+import asyncio
+import logging
+
 import board
 
 import adafruit_dht
@@ -12,9 +15,20 @@ class DHT22(SensorHead):
         self.system_name = 'dht'
         self.devices = [adafruit_dht.DHT22(dht_pin1), adafruit_dht.DHT22(dht_pin2)]
 
-    def get_data(self, channel: int = 22) -> dict[str: str]:
+    async def get_data(self, channel: int = 22) -> dict[str: str]:
         # Считает среднее с трех датчиков
-        data = [(device.temperature, device.humidity) for device in self.devices]
+        for i in range(10):
+            try:
+                data = [(device.temperature, device.humidity) for device in self.devices]
+                break
+            except Exception as e:
+                logging.info(e)
+                await asyncio.sleep(1)
+        else:
+            return {
+                'temperature': f"Error",
+                'humidity': f"Error"
+            }
 
         temperature = round(sum(map(lambda x: x[1], data)) / len(self.devices), 2)
         humidity = round(sum(map(lambda x: x[0], data)) / len(self.devices), 2)

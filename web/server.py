@@ -2,8 +2,8 @@ import asyncio
 import json
 import logging
 import os
-from logging.config import dictConfig
 
+from logging.config import dictConfig
 from fastapi import FastAPI, HTTPException
 from starlette.responses import FileResponse, JSONResponse
 
@@ -30,7 +30,7 @@ senders_dict: dict[str, SenderHead] = {
 sensors_list: list[SensorHead] = [
     ACS712(),
     DHT22(),
-    ZMPT101B(),
+    ZMPT101B()
 ]
 
 # run with uvicorn web:app --host 0.0.0.0 --port 80
@@ -52,13 +52,7 @@ async def get_results():
         'battery': 'Error'
     }
     for sensor in sensors_list:
-        for i in range(10):
-            try:
-                data.update(sensor.get_data())
-                break
-            except Exception as e:
-                logger.info(e)
-            await asyncio.sleep(0.5)
+        data.update(await sensor.get_data())
 
     return JSONResponse(data)
 

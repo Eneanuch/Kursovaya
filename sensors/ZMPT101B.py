@@ -27,7 +27,7 @@ class ZMPT101B(SensorHead):
         voltage -= self.MIN_BATTERY_LEVEL
         return round(voltage / (self.MAX_BATTERY_LEVEL - self.MIN_BATTERY_LEVEL), 2)
 
-    def get_data(self, *args, **kwargs) -> dict[str: str]:
+    async def get_data(self, *args, **kwargs) -> dict[str: str]:
         voltage = round(self.chan.voltage, 2)
 
         return {

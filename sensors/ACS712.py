@@ -15,7 +15,7 @@ class ACS712(SensorHead):
         self.ads = ADS.ADS1115(i2c)
         self.chan = AnalogIn(self.ads, ADS.P1)
 
-    def get_data(self, *args, **kwargs) -> dict[str: str]:
+    async def get_data(self, *args, **kwargs) -> dict[str: str]:
         voltage = self.chan.voltage
         current = round((voltage - 2.5) / 0.185, 2) # config for 5A
         return {
