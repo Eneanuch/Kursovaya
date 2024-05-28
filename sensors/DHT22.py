@@ -16,8 +16,8 @@ class DHT22(SensorHead):
         # Считает среднее с трех датчиков
         data = [(device.temperature, device.humidity) for device in self.devices]
 
-        temperature = round(sum(map(lambda x: x[1], data)) / 3, 2)
-        humidity = round(sum(map(lambda x: x[0], data)) / 3, 2)
+        temperature = round(sum(map(lambda x: x[1], data)) / len(self.devices), 2)
+        humidity = round(sum(map(lambda x: x[0], data)) / len(self.devices), 2)
 
         return {
             'temperature': f"{temperature}*C",

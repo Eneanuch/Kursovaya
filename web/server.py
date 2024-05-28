@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 import os
@@ -62,6 +63,7 @@ async def get_results():
                 break
             except Exception as e:
                 logger.info(e)
+            await asyncio.sleep(0.5)
 
     return JSONResponse(data)
 
