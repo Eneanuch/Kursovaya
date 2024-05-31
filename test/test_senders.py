@@ -1,30 +1,23 @@
 import smbus2
 import time
 
+from models import I2CData
+from senders import I2CSender
+
 bus = smbus2.SMBus(1)
 address = 0x04
 
-def writeData(value):
-    byteValue = StringToBytes(value)
-    bus.write_i2c_block_data(address,0x00,byteValue) #first byte is 0=command byte.. just is.
-    return -1
-
-
-def StringToBytes(val):
-        retVal = []
-        for c in val:
-            retVal.append(ord(c))
-        return retVal
-
-while True:
-    print("sending")
-    writeData("test")
-    time.sleep(5)
-
-    print('OPEN')
-    writeData("OPEN-00-00")
-    time.sleep(7)
-
-    print('WIN')
-    writeData("WIN-12-200")
-    time.sleep(7)
+test_data = {
+        'humidity': 'Error',
+        'temperature': 'Error',
+        'current': 'Error',
+        'voltage': 'Error',
+        'battery': 'Error'
+    }
+data = I2CData(
+    i2cAddress=0x04,
+    i2cBus=1,
+    data=str(test_data)
+)
+i2c_sender = I2CSender()
+i2c_sender.send_data(data)
