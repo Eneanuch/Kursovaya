@@ -2,15 +2,29 @@ import smbus2
 import time
 
 bus = smbus2.SMBus(1)
-SLAVE_ADDRESS = 0x04
+address = 0x04
 
-def request_reading():
-    reading = int(bus.read_byte(SLAVE_ADDRESS))
-    print(reading)
+def writeData(value):
+    byteValue = StringToBytes(value)
+    bus.write_i2c_block_data(address,0x00,byteValue) #first byte is 0=command byte.. just is.
+    return -1
+
+
+def StringToBytes(val):
+        retVal = []
+        for c in val:
+            retVal.append(ord(c))
+        return retVal
 
 while True:
-    command = input("Enter command: l - toggle LED, r - read A0 ")
-    if command == 'l':
-        bus.write_byte(SLAVE_ADDRESS, ord('l'))
-    elif command == 'r':
-        request_reading()
+    print("sending")
+    writeData("test")
+    time.sleep(5)
+
+    print('OPEN')
+    writeData("OPEN-00-00")
+    time.sleep(7)
+
+    print('WIN')
+    writeData("WIN-12-200")
+    time.sleep(7)
