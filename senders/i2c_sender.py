@@ -1,6 +1,6 @@
 from web.models import I2CData, SenderData, Statuses
 from senders.sender_head import SenderHead
-import smbus
+import smbus2
 
 
 class I2CSender(SenderHead):
