@@ -1,4 +1,3 @@
-import asyncio
 import json
 import logging
 import os
@@ -7,7 +6,7 @@ from logging.config import dictConfig
 from fastapi import FastAPI, HTTPException
 from starlette.responses import FileResponse, JSONResponse
 
-from models import SendPayload, SMSData, I2CData, UARTData, SenderData
+from web.models import SendPayload, SMSData, I2CData, UARTData, SenderData
 from senders import SenderHead, SmsSender, UARTSender, I2CSender
 from sensors import ACS712, DHT22, ZMPT101B, SensorHead
 

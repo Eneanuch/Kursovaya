@@ -1,8 +1,7 @@
 import smbus2
-import time
 
-from ..models import I2CData
-from ..senders import I2CSender
+from web.models import I2CData
+from senders import I2CSender
 
 bus = smbus2.SMBus(1)
 address = 0x04

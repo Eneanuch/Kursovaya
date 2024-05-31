@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from models import SenderData
+from web.models import SenderData
 
 
 class SenderHead:
