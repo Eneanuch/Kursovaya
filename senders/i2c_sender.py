@@ -15,7 +15,7 @@ class I2CSender(SenderHead):
         return byte_value
 
     def send_data(self, data: I2CData) -> SenderData:
-        bus = smbus.SMBus(data.i2cBus)
+        bus = smbus2.SMBus(data.i2cBus)
         byte_value = self.string_to_bytes(data.data)
         bus.write_i2c_block_data(data.i2cAddress, 0x00, byte_value)
         return SenderData(status=Statuses.SUCCESS, message=data.data)
