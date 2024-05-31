@@ -1,7 +1,14 @@
 import smbus2
+from pydantic import BaseModel
 
-from web.models import I2CData
 from senders import I2CSender
+
+
+class I2CData(BaseModel):
+    i2cAddress: int
+    i2cBus: int
+    data: str
+
 
 bus = smbus2.SMBus(1)
 address = 0x04
