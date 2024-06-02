@@ -8,3 +8,4 @@ adafruit_dht
 adafruit_ads1x15
 serial
 pydantic==2.7.2
+logging
