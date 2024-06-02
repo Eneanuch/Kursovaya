@@ -16,7 +16,7 @@ class DHT22(SensorHead):
         self.devices = [adafruit_dht.DHT22(dht_pin1), adafruit_dht.DHT22(dht_pin2)]
 
     async def get_data(self, channel: int = 22) -> dict[str: str]:
-        # Считает среднее с трех датчиков
+        # Trying to get data from sensors (throws buffer crowded)
         for i in range(10):
             try:
                 data = [(device.temperature, device.humidity) for device in self.devices]
@@ -30,6 +30,7 @@ class DHT22(SensorHead):
                 'humidity': f"Error"
             }
 
+        # Counting average from 2 sensors
         temperature = round(sum(map(lambda x: x[1], data)) / len(self.devices), 2)
         humidity = round(sum(map(lambda x: x[0], data)) / len(self.devices), 2)
 

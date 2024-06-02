@@ -2,7 +2,7 @@ import time
 
 import serial
 
-from web.models import SMSData, SenderData, Statuses
+from models import SMSData, SenderData, Statuses
 from senders.sender_head import SenderHead
 
 

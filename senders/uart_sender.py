@@ -1,6 +1,6 @@
 import serial
 
-from web.models import SenderData, UARTData, Statuses
+from models import SenderData, UARTData, Statuses
 from senders.sender_head import SenderHead
 
 

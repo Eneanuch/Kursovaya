@@ -14,12 +14,12 @@ bus = smbus2.SMBus(1)
 address = 0x04
 
 test_data = {
-        'humidity': 'Error',
-        'temperature': 'Error',
-        'current': 'Error',
-        'voltage': 'Error',
-        'battery': 'Error'
-    }
+    'humidity': 'Error',
+    'temperature': 'Error',
+    'current': 'Error',
+    'voltage': 'Error',
+    'battery': 'Error'
+}
 data = I2CData(
     i2cAddress=0x04,
     i2cBus=1,
