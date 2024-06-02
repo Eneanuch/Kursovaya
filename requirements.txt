@@ -4,3 +4,7 @@ pyserial~=3.5
 board~=1.0
 machine~=0.0.1
 smbus2
+adafruit_dht
+adafruit_ads1x15
+serial
+pydantic==2.7.2

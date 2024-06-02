@@ -68,7 +68,7 @@ async def get_results() -> Response:
 @app.post("/send_results")
 async def send_results(payload: SendPayload) -> Response:
     """
-    send_results(payload: SendPayload)
+    send_results(payload: SendPayload) -> Response
 
     :param payload: Data from form
     :return: json response with information about successful or failure while sending
