@@ -6,43 +6,32 @@ import time
 GPIO.setmode(GPIO.BOARD)
 
 # Enable Serial Communication
-port = serial.Serial("/dev/serial0", baudrate=9600, timeout=1)
+ser = serial.Serial("/dev/serial0", baudrate=9600, timeout=1)
 
-# Transmitting AT Commands to the Modem
-# '\r\n' indicates the Enter key
+def send_command(command, wait_for_response=True):
+    ser.write((command + '\r').encode())
+    time.sleep(1)  # Небольшая задержка для обработки команды
 
-port.write(('AT' + '\r\n').encode())
-rcv = port.read(100)
-print(rcv)
-time.sleep(1)
+    if wait_for_response:
+        response = ser.read_all().decode()
+        return response
+    return None
 
-port.write(('ATE0' + '\r\n').encode())  # Disable the Echo
-rcv = port.read(100)
-print(rcv.decode('utf-8'))
-time.sleep(1)
+# Пример использования
+def main():
+    response = send_command('AT')
+    print('Response:', response)
 
-port.write(('AT+CMGF=1' + '\r\n').encode())  # Select Message format as Text mode
-rcv = port.read(100)
-print(rcv.decode('utf-8'))
-time.sleep(1)
+    response = send_command('AT+CSQ')
+    print('Signal Quality:', response)
 
-port.write(('AT+CNMI=2,1,0,0,0' + '\r\n').encode())  # New SMS Message Indications
-rcv = port.read(100)
-print(rcv.decode('utf-8'))
-time.sleep(1)
+    while True:
+        line = ser.readline().decode().strip()
+        if line:
+            print('Received:', line)
+            if 'BU,DNHG>2' in line:
+                print('Special message received:', line)
+                # Выполнить нужные действия при получении этого сообщения
 
-# Sending a message to a particular Number
-
-port.write(('AT+CMGS="XXXXXXXXXX"' + '\r\n').encode())
-rcv = port.read(100)
-print(rcv.decode('utf-8'))
-time.sleep(1)
-
-port.write(('Hello User' + '\r\n').encode())  # Message
-rcv = port.read(100)
-print(rcv.decode('utf-8'))
-
-port.write(("\x1A").encode())  # Enable to send SMS
-for i in range(10):
-    rcv = port.read(100)
-    print(rcv.decode('utf-8'))
+if __name__ == '__main__':
+    main()
