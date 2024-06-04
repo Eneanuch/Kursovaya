@@ -38,7 +38,7 @@ def main():
     response = send_command('AT+CSQ')
     print('Signal Quality:', response)
 
-    send_sms("79807998558", "Hello World")
+    send_sms("89807998558", "Hello World")
     time.sleep(10)
 
     # while True:
