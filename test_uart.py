@@ -1,21 +1,24 @@
 import serial
 import time
 
-# Set up the serial connection to the Arduino
 arduino = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
 
-# Give some time for the connection to establish
 time.sleep(2)
 
-# Function to send data to Arduino
+
 def send_data(data):
     arduino.write((data + '\n').encode())
 
-# Example of sending data
+
 try:
     while True:
-        send_data("Hello, Arduino!")
-        time.sleep(1)
+        send_data("ON")
+        print("Sent: ON")
+        time.sleep(5)
+
+        send_data("OFF")
+        print("Sent: OFF")
+        time.sleep(5)
 except KeyboardInterrupt:
     print("Communication stopped")
 finally:
