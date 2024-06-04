@@ -6,7 +6,7 @@ import time
 GPIO.setmode(GPIO.BOARD)
 
 # Enable Serial Communication
-port = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=1)
+port = serial.Serial("/dev/serial0", baudrate=9600, timeout=1)
 
 # Transmitting AT Commands to the Modem
 # '\r\n' indicates the Enter key

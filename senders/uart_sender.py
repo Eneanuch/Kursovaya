@@ -14,6 +14,6 @@ class UARTSender(SenderHead):
             data.baudRate,
             timeout=data.timeout,
         )
-        self.serial.write((data.data + '\n').encode('utf-8'))
+        self.serial.write((data.data + '\n').encode())
 
         return SenderData(status=Statuses.SUCCESS, message='OK')
