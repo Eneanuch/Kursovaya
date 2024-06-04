@@ -22,7 +22,7 @@ def send_sms(phone_number, message):
 
     send_command('AT+CMGF=1')
 
-    send_command('AT+CMGS="{}"'.format(phone_number))
+    send_command(f'AT+CMGS="{phone_number}"')
     send_command(message, wait_for_response=False)
     ser.write(bytes([26]))
     time.sleep(1)
@@ -32,10 +32,11 @@ def send_sms(phone_number, message):
 
 
 def main():
-    response = send_command('AT')
+    send_command("AT+CPIN=0000")
+    response = send_command('AT', wait_for_response=True)
     print('Response:', response)
 
-    response = send_command('AT+CSQ')
+    response = send_command('AT+CSQ', wait_for_response=True)
     print('Signal Quality:', response)
 
     send_sms("89807998558", "Hello World")
