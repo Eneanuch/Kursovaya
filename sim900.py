@@ -1,12 +1,11 @@
 import serial
 import RPi.GPIO as GPIO
-import os
 import time
 
 GPIO.setmode(GPIO.BOARD)
 
-# Enable Serial Communication
 ser = serial.Serial("/dev/serial0", baudrate=9600, timeout=1)
+
 
 def send_command(command, wait_for_response=True):
     ser.write((command + '\r').encode())
@@ -16,6 +15,7 @@ def send_command(command, wait_for_response=True):
         response = ser.read_all().decode()
         return response
     return None
+
 
 def send_sms(phone_number, message):
     time.sleep(1)
@@ -38,7 +38,7 @@ def main():
     response = send_command('AT+CSQ')
     print('Signal Quality:', response)
 
-    send_sms("79807998558", "Hello Worlds")
+    send_sms("79807998558", "Hello World")
     time.sleep(10)
 
     # while True:
