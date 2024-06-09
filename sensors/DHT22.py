@@ -30,7 +30,7 @@ class DHT22(SensorHead):
                 'humidity': f"Error"
             }
 
-        # Counting average from 2 sensors
+        # Counting average from all sensors
         temperature = round(sum(map(lambda x: x[1], data)) / len(self.devices), 2)
         humidity = round(sum(map(lambda x: x[0], data)) / len(self.devices), 2)
 

@@ -19,7 +19,13 @@ class ZMPT101B(SensorHead):
         self.ads = ADS.ADS1115(i2c)
         self.chan = AnalogIn(self.ads, ADS.P0)
 
-    def get_battery_level(self, voltage) -> float:
+    def get_battery_level(self, voltage: float) -> float:
+        """
+        Counting battery level by voltage and configuration
+
+        :param voltage: voltage in float value
+        :return: battery level
+        """
         if voltage >= self.MAX_BATTERY_LEVEL:
             return 100
         elif voltage <= self.MIN_BATTERY_LEVEL:

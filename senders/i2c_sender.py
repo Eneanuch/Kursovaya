@@ -11,7 +11,13 @@ class I2CSender(SenderHead):
         super().__init__(*args, **kwargs)
 
     @staticmethod
-    def string_to_bytes(data: str):
+    def string_to_bytes(data: str) -> list[int]:
+        """
+        Converts a string data to bytes list for convenience data transportation
+
+        :param data: string data
+        :return: bytes list
+        """
         byte_value = []
         for c in data:
             byte_value.append(ord(c))
@@ -21,7 +27,7 @@ class I2CSender(SenderHead):
         bus = smbus2.SMBus(data.i2cBus)
         byte_value = self.string_to_bytes(data.data)
 
-        # dividing data because i2c have limits (32 bytes at a time)
+        # dividing data for i2c transportation, because i2c have limits (32 bytes per a time)
 
         try:
             for i in range(0, len(byte_value), self.CHUNK_SIZE):

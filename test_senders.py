@@ -20,6 +20,7 @@ test_data = {
     'voltage': 'Error',
     'battery': 'Error'
 }
+# example data for tests
 data = I2CData(
     i2cAddress=0x04,
     i2cBus=1,

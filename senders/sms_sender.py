@@ -18,7 +18,16 @@ class SmsSender(SenderHead):
         if not self.setup_gsm():
             raise Exception("GSM не получается подключить")
 
-    def send_at_command(self, command, expected_response, timeout=2):
+    def send_at_command(self, command: str, expected_response: str, timeout: int = 2):
+        """
+        Send command by serial port to device
+
+        :param command: text of command
+        :param expected_response: what you need in response
+        :param timeout: how much time give to the device to answer
+        :return: response or None
+        """
+
         self.serial.write((command + '\r').encode())
         time.sleep(0.5)
         end_time = time.time() + timeout
@@ -30,6 +39,11 @@ class SmsSender(SenderHead):
         return None
 
     def setup_gsm(self) -> bool:
+        """
+        Setup GSM device
+
+        :return: True if GSM device is OK else False
+        """
         if self.send_at_command('AT', 'OK') is None:
             return False
 
