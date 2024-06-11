@@ -1,3 +1,4 @@
+import logging
 import time
 
 import serial
@@ -16,7 +17,7 @@ class SmsSender(SenderHead):
             timeout=timeout
         )
         if not self.setup_gsm():
-            raise Exception("GSM не получается подключить")
+            logging.error("GSM не получается подключить")
 
     def send_at_command(self, command: str, expected_response: str, timeout: int = 2):
         """
