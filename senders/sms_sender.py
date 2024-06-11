@@ -30,15 +30,16 @@ class SmsSender(SenderHead):
         :param timeout: how much time give to the device to answer
         :return: response or None
         """
-
-        self.serial.write((command + '\r').encode())
-        time.sleep(0.5)
-        end_time = time.time() + timeout
-        while time.time() < end_time:
-            if self.serial.in_waiting > 0:
-                response = self.serial.read(self.serial.in_waiting).decode()
-                if expected_response in response:
-                    return response
+        if self.serial:
+            self.serial.write((command + '\r').encode())
+            time.sleep(0.5)
+            end_time = time.time() + timeout
+            while time.time() < end_time:
+                if self.serial.in_waiting > 0:
+                    response = self.serial.read(self.serial.in_waiting).decode()
+                    if expected_response in response:
+                        return response
+            return None
         return None
 
     def setup_gsm(self) -> bool:
