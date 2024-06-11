@@ -17,7 +17,7 @@ class SmsSender(SenderHead):
                 timeout=timeout
             )
         except Exception as e:
-            pass
+            return
         if not self.setup_gsm():
             logging.error("GSM не получается подключить")
 
