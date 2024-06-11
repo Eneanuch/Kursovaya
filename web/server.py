@@ -60,7 +60,10 @@ async def get_results() -> Response:
         'battery': 'Error'
     }
     for sensor in sensors_list:
-        data.update(await sensor.get_data())
+        try:
+            data.update(await sensor.get_data())
+        except Exception as e:
+            logging.info(e)
 
     return JSONResponse(data)
 
