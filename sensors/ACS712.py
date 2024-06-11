@@ -1,3 +1,5 @@
+import logging
+
 import board
 import busio
 
@@ -11,9 +13,12 @@ class ACS712(SensorHead):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.system_name = 'ACS712'
-        i2c = busio.I2C(board.SCL, board.SDA)
-        self.ads = ADS.ADS1115(i2c)
-        self.chan = AnalogIn(self.ads, ADS.P1)
+        try:
+            i2c = busio.I2C(board.SCL, board.SDA)
+            self.ads = ADS.ADS1115(i2c)
+            self.chan = AnalogIn(self.ads, ADS.P1)
+        except ValueError as e:
+            logging.error(f"ACS712 sensor not connected ({ADS.P1})")
 
     async def get_data(self, *args, **kwargs) -> dict[str: str]:
         voltage = self.chan.voltage

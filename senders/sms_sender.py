@@ -10,12 +10,14 @@ from senders.sender_head import SenderHead
 class SmsSender(SenderHead):
     def __init__(self, *args, port='/dev/serial0', baudrate=9600, timeout=1, **kwargs):
         super().__init__(*args, **kwargs)
-
-        self.serial = serial.Serial(
-            port=port,
-            baudrate=baudrate,
-            timeout=timeout
-        )
+        try:
+            self.serial = serial.Serial(
+                port=port,
+                baudrate=baudrate,
+                timeout=timeout
+            )
+        except Exception as e:
+            pass
         if not self.setup_gsm():
             logging.error("GSM не получается подключить")
 
